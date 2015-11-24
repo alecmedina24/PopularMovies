@@ -1,0 +1,24 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <GridView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="auto_fit"
+        android:id="@+id/gridview"
+        android:layout_weight="1"
+        tools:context=".PosterDisplayFragment"
+        android:scrollbars="none" />
+
+    <ProgressBar
+        tools:visibility="visible"
+        android:visibility="gone"
+        android:layout_weight="0"
+        android:id="@+id/show_more"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

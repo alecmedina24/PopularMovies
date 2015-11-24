@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Popular Movies</string>
+
+    <string name="action_sort">Sort</string>
+    <string name="title_activity_poster_display">PosterDisplay</string>
+
+    <string name="title_activity_movie_detail">MovieDetailActivity</string>
+    <string name="most_popular">most popular</string>
+    <string name="highest_rated">highest rated</string>
+    <string name="sort_order">Sort Order</string>
+</resources>
