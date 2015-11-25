@@ -38,6 +38,7 @@ public class PosterDisplayFragment extends Fragment {
     private ProgressBar progressBar;
     private MovieAdapter movieAdapter;
     private ScrollListener scrollListener;
+    private int orientation;
 
     public PosterDisplayFragment() {
         // Required empty public constructor
@@ -57,6 +58,8 @@ public class PosterDisplayFragment extends Fragment {
         progressBar = (ProgressBar) rootView.findViewById(R.id.show_more);
         scrollListener = new ScrollListener(this);
         gridView.setOnScrollListener(scrollListener);
+
+        orientation = getResources().getConfiguration().orientation;
 
         return rootView;
     }
@@ -88,6 +91,10 @@ public class PosterDisplayFragment extends Fragment {
         movieAdapter.clearMovies();
         page = 1;
         getData(sortOrder);
+    }
+
+    public int getOrientation() {
+        return orientation;
     }
 
     /*
@@ -125,7 +132,7 @@ public class PosterDisplayFragment extends Fragment {
                         baseUrl += "sort_by=vote_average.desc";
                 }
                 final String API_KEY = "api_key";
-                final String API_VALUE = ""; // TODO - replace with API key
+                final String API_VALUE = "ed1b942e1ee7f2f81bec1461b84e5e87"; // TODO - replace with API key
 
                 Uri builtUri = Uri.parse(baseUrl).buildUpon()
                         .appendQueryParameter(API_KEY, API_VALUE).appendQueryParameter("page",

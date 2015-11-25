@@ -2,20 +2,20 @@ package com.xphonesoftware.popularmovies.ui;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.xphonesoftware.popularmovies.R;
 import com.xphonesoftware.popularmovies.models.Movie;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 public class MovieDetailFragment extends Fragment {
     private static final String TAG = MovieDetailFragment.class.getSimpleName();
@@ -25,6 +25,15 @@ public class MovieDetailFragment extends Fragment {
     private Movie movie;
 
     private OnFragmentInteractionListener mListener;
+
+    @Bind(R.id.movie_title)
+    TextView titleText;
+    @Bind(R.id.overview)
+    TextView overview;
+    @Bind(R.id.user_rating)
+    TextView userRating;
+    @Bind(R.id.release_date)
+    TextView releaseDate;
 
     public static MovieDetailFragment newInstance(Movie movie) {
         MovieDetailFragment fragment = new MovieDetailFragment();
@@ -43,7 +52,6 @@ public class MovieDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             movie = (Movie) getArguments().getSerializable(MOVIE);
-            Log.v(TAG, movie.getTitle());
         }
     }
 
@@ -53,18 +61,10 @@ public class MovieDetailFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_movie_detail, container, false);
 
-        // Below sets all text and resources related to each movie within the detail activity
-        TextView titleText = (TextView) view.findViewById(R.id.movie_title);
+        ButterKnife.bind(this, view);
         titleText.setText(movie.getTitle());
-
-        TextView overViewText = (TextView) view.findViewById(R.id.overview);
-        overViewText.setText(movie.getOverview());
-
-        TextView userRating = (TextView) view.findViewById(R.id.user_rating);
-        String userRatingNum = String.valueOf(movie.getVoteAverage());
-        userRating.setText(userRatingNum + "/10");
-
-        TextView releaseDate = (TextView) view.findViewById(R.id.release_date);
+        overview.setText(movie.getOverview());
+        userRating.setText(movie.getVoteAverage() + "/10");
         releaseDate.setText(movie.getReleaseDate());
 
         ImageView movieThumbnail = (ImageView) view.findViewById(R.id.movie_thumbnail);
