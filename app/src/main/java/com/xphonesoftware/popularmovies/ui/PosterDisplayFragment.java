@@ -132,7 +132,7 @@ public class PosterDisplayFragment extends Fragment {
                         baseUrl += "sort_by=vote_average.desc";
                 }
                 final String API_KEY = "api_key";
-                final String API_VALUE = "ed1b942e1ee7f2f81bec1461b84e5e87"; // TODO - replace with API key
+                final String API_VALUE = ""; // TODO - replace with API key
 
                 Uri builtUri = Uri.parse(baseUrl).buildUpon()
                         .appendQueryParameter(API_KEY, API_VALUE).appendQueryParameter("page",
