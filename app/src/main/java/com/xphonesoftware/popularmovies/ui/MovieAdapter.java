@@ -68,24 +68,27 @@ public class MovieAdapter extends BaseAdapter {
             imageView = (ImageView) convertView;
         }
 
-            // issue request to retrieve image for movie poster
-            final Movie movie = movies.get(position);
-            String urlPosterBase = "http://image.tmdb.org/t/p/w185/";
-            String posterPath = movie.getPosterPath();
+        // issue request to retrieve image for movie poster
+        final Movie movie = movies.get(position);
+        String urlPosterBase = "http://image.tmdb.org/t/p/w185/";
+        String posterPath = movie.getPosterPath();
         Picasso.with(context).load(urlPosterBase + posterPath).placeholder(R.drawable.zoom_loading)
                 .error(R.drawable.not_available).into(imageView);
-            imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // starts the detail activity when the poster is clicked
-                    Log.v(TAG, movie.getTitle());
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // starts the detail activity when the poster is clicked
+                Log.v(TAG, movie.getTitle());
+                boolean hasTwoFragments = posterDisplayFragment.getResources().getBoolean(R.bool.has_two_panes);
+                if (hasTwoFragments) {
+                    ((MainActivity) posterDisplayFragment.getActivity()).onMovieSelected(movie);
+                } else {
                     Intent intent = new Intent(context, MovieDetailActivity.class);
                     intent.putExtra(MovieDetailActivity.MOVIE_ARG, movie);
                     context.startActivity(intent);
                 }
-            });
-//        }
-
+            }
+        });
         return imageView;
     }
 

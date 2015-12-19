@@ -1,71 +1,21 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/scrollView"
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
+    <ListView
+        android:id="@+id/review_listView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/no_movies"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context="com.xphonesoftware.popularmovies.ui.MovieDetailFragment">
+        android:text="Please select movie"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/movie_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#009889"
-            android:padding="30dp"
-            android:text="Title"
-            android:textColor="#ffffff"
-            android:textSize="32dp" />
-
-        <TextView
-            android:id="@+id/overview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="false"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="false"
-            android:layout_alignParentStart="false"
-            android:layout_below="@+id/movie_thumbnail"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:text="overview"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        <TextView
-            android:id="@+id/release_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/movie_thumbnail"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="27dp"
-            tools:text="releaseDate" />
-
-        <TextView
-            android:id="@+id/user_rating"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/release_date"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="38dp"
-            tools:text="userRating" />
-
-
-        <ImageView
-            android:id="@+id/movie_thumbnail"
-            android:layout_width="140dp"
-            android:layout_height="260dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@id/movie_title"
-            android:layout_centerHorizontal="true"
-            android:padding="10dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/not_available" />
-
-    </RelativeLayout>
-
-</ScrollView>
+</FrameLayout>

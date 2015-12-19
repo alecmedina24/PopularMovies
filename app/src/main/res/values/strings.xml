@@ -7,5 +7,6 @@
     <string name="title_activity_movie_detail">MovieDetailActivity</string>
     <string name="most_popular">most popular</string>
     <string name="highest_rated">highest rated</string>
+    <string name="favorite_movies">favorite movies</string>
     <string name="sort_order">Sort Order</string>
 </resources>

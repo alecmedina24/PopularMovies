@@ -2,19 +2,18 @@ package com.xphonesoftware.popularmovies.ui;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.xphonesoftware.popularmovies.R;
+import com.xphonesoftware.popularmovies.models.Movie;
 
 /**
  * This activity is the entry point to the application
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements PosterDisplayFragment.OnMovieSelectedListener {
 
     private int order;
 
@@ -40,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
             final PosterDisplayFragment posterDisplayFragment =
                     getPosterDisplayFragment();
             String [] optionsId = { getString(R.string.most_popular),
-                    getString(R.string.highest_rated)};
+                    getString(R.string.highest_rated), getString(R.string.favorite_movies)};
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(R.string.sort_order).setItems(optionsId,
                     new DialogInterface.OnClickListener() {
@@ -48,8 +47,10 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(DialogInterface dialog, int which) {
                     if (which == 0) {
                         order = PosterDisplayFragment.ORDER_POPULARITY;
-                    } else {
+                    } else if (which ==1) {
                         order = PosterDisplayFragment.ORDER_RATING;
+                    } else {
+                        order = PosterDisplayFragment.FAVORITE_MOVIES;
                     }
                     posterDisplayFragment.setSortOrder(order);
                 }
@@ -65,5 +66,14 @@ public class MainActivity extends AppCompatActivity {
     public PosterDisplayFragment getPosterDisplayFragment() {
         return (PosterDisplayFragment)
                 (getSupportFragmentManager().findFragmentById(R.id.fragment));
+    }
+
+    @Override
+    public void onMovieSelected(Movie movie) {
+        MovieDetailFragment movieDetailFrag = (MovieDetailFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.detail_fragment);
+        if (movieDetailFrag != null) {
+            movieDetailFrag.update(movie);
+        }
     }
 }
