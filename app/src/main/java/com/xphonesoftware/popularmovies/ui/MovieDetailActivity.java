@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.xphonesoftware.popularmovies.R;
 import com.xphonesoftware.popularmovies.models.Movie;
 
 /**
@@ -13,7 +14,6 @@ public class MovieDetailActivity extends AppCompatActivity
         implements MovieDetailFragment.OnFragmentInteractionListener {
 
     public static final String MOVIE_ARG = "movie";
-    private MovieDetailFragment movieDetailFragment;
     private Movie movie;
 
     @Override
@@ -21,9 +21,7 @@ public class MovieDetailActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         Bundle extras = getIntent().getExtras();
         this.movie = (Movie) extras.get(MOVIE_ARG);
-        this.movieDetailFragment = MovieDetailFragment.newInstance();
-        getSupportFragmentManager().beginTransaction().add(android.R.id.content,
-                movieDetailFragment).commit();
+        setContentView(R.layout.activity_movie_detail);
     }
 
     // Necessary method from implementing OnFragmentInteractionListener
@@ -34,6 +32,8 @@ public class MovieDetailActivity extends AppCompatActivity
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        movieDetailFragment.update(movie);
+        MovieDetailFragment mdf = (MovieDetailFragment)
+                getSupportFragmentManager().findFragmentById(R.id.fragment);
+        mdf.update(movie);
     }
 }
