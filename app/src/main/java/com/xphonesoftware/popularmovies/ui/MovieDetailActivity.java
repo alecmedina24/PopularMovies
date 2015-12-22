@@ -1,6 +1,5 @@
 package com.xphonesoftware.popularmovies.ui;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
@@ -10,8 +9,7 @@ import com.xphonesoftware.popularmovies.models.Movie;
 /**
  * Display details about a specified movie
  */
-public class MovieDetailActivity extends AppCompatActivity
-        implements MovieDetailFragment.OnFragmentInteractionListener {
+public class MovieDetailActivity extends AppCompatActivity {
 
     public static final String MOVIE_ARG = "movie";
     private Movie movie;
@@ -22,11 +20,6 @@ public class MovieDetailActivity extends AppCompatActivity
         Bundle extras = getIntent().getExtras();
         this.movie = (Movie) extras.get(MOVIE_ARG);
         setContentView(R.layout.activity_movie_detail);
-    }
-
-    // Necessary method from implementing OnFragmentInteractionListener
-    public void onFragmentInteraction(Uri uri) {
-        // Not used
     }
 
     @Override

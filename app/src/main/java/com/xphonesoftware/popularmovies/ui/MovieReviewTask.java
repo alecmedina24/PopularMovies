@@ -26,7 +26,6 @@ public class MovieReviewTask extends AsyncTask<Integer, Void, Void> {
     private Movie movie;
     private ReviewResults reviewResults;
     private MovieDetailFragment movieDetailFragment;
-    private ReviewAdapter reviewAdapter;
     private ProgressBar progressBar;
 
     public MovieReviewTask(Movie movie, MovieDetailFragment movieDetailFragment) {
@@ -45,7 +44,7 @@ public class MovieReviewTask extends AsyncTask<Integer, Void, Void> {
         try {
             final String urlTrailerBase = "http://api.themoviedb.org/3/movie";
             final String API_KEY = "api_key";
-            final String API_VALUE = "ed1b942e1ee7f2f81bec1461b84e5e87";
+            final String API_VALUE = null; //TODO add/remove API key
             final int movieId = movie.getId();
             final String videoPath = "reviews";
 
@@ -95,7 +94,7 @@ public class MovieReviewTask extends AsyncTask<Integer, Void, Void> {
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
         movieDetailFragment.setIsLoading(false);
-        this.reviewAdapter = movieDetailFragment.getReviewAdapter();
+        ReviewAdapter reviewAdapter = movieDetailFragment.getReviewAdapter();
         reviewAdapter.updateReviews(reviewResults);
         movieDetailFragment.setTotalPageCount(reviewResults.getTotalPages());
         progressBar.setVisibility(View.GONE);

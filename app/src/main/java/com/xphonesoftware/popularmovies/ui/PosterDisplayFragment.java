@@ -14,6 +14,7 @@ import android.widget.GridView;
 import android.widget.ProgressBar;
 
 import com.google.gson.Gson;
+import com.xphonesoftware.popularmovies.MovieData;
 import com.xphonesoftware.popularmovies.R;
 import com.xphonesoftware.popularmovies.models.DiscoveredMovies;
 import com.xphonesoftware.popularmovies.models.Movie;
@@ -36,9 +37,9 @@ public class PosterDisplayFragment extends Fragment {
     public static final int ORDER_POPULARITY = 0;
     public static final int ORDER_RATING = 1;
     public static final int FAVORITE_MOVIES = 2;
+    public static final String FIRST_VISIBLE_ITEM = "firstVisibleItem";
 
     private int sortOrder = ORDER_POPULARITY;
-    private int page = 0;
     private boolean isLoading;
     private int totalMovies;
     private ProgressBar progressBar;
@@ -48,9 +49,16 @@ public class PosterDisplayFragment extends Fragment {
     private ArrayList<Movie> favoriteMovies;
     private Favorites favorites;
     private OnMovieSelectedListener onMovieSelectedListener;
+    private GridView gridView;
+    private int savedScrollPosition;
+    private MovieData movieData;
+
+    public OnMovieSelectedListener getOnMovieSelectedListener() {
+        return onMovieSelectedListener;
+    }
 
     public interface OnMovieSelectedListener {
-        public void onMovieSelected(Movie movie);
+        void onMovieSelected(Movie movie);
     }
 
     public PosterDisplayFragment() {
@@ -63,7 +71,7 @@ public class PosterDisplayFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_poster_display, container, false);
 
         // Sets the adapter for the gridView
-        GridView gridView = (GridView) rootView.findViewById(R.id.gridview);
+        gridView = (GridView) rootView.findViewById(R.id.gridview);
         movieAdapter = new MovieAdapter(getActivity(), this);
         gridView.setAdapter(movieAdapter);
 
@@ -76,6 +84,13 @@ public class PosterDisplayFragment extends Fragment {
         favoriteMovies = new ArrayList<>();
         favorites = new Favorites(getActivity());
 
+        savedScrollPosition = -1;
+        if (savedInstanceState != null) {
+            savedScrollPosition = savedInstanceState.getInt(FIRST_VISIBLE_ITEM);
+        }
+
+        movieData = MovieData.getInstance();
+
         return rootView;
     }
 
@@ -85,11 +100,18 @@ public class PosterDisplayFragment extends Fragment {
         getData(sortOrder);
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        int scrollPosition = gridView.getFirstVisiblePosition();
+        outState.putInt(FIRST_VISIBLE_ITEM, scrollPosition);
+    }
+
     public void getData(int sortOrder) {
         if (!isLoading) {
             isLoading = true;
             FetchMovieData getMovies = new FetchMovieData();
-            getMovies.execute(++page, sortOrder);
+            getMovies.execute(movieData.nextPage(), sortOrder);
         }
     }
 
@@ -104,7 +126,7 @@ public class PosterDisplayFragment extends Fragment {
     public void setSortOrder(int sortOrder) {
         this.sortOrder = sortOrder;
         movieAdapter.clearMovies();
-        page = 1;
+        movieData.setPage(1);
         getData(sortOrder);
     }
 
@@ -129,7 +151,6 @@ public class PosterDisplayFragment extends Fragment {
         onMovieSelectedListener = null;
     }
 
-
     /*
      * Retrieve movie data from the moviedb web service
      */
@@ -150,6 +171,10 @@ public class PosterDisplayFragment extends Fragment {
                 movieAdapter.updateMovies(favoriteMovies);
             }
             progressBar.setVisibility(View.GONE);
+            if (savedScrollPosition != -1) {
+                gridView.setSelection(savedScrollPosition);
+                savedScrollPosition = -1;
+            }
         }
 
         @Override
@@ -177,7 +202,7 @@ public class PosterDisplayFragment extends Fragment {
                         break;
                 }
                 final String API_KEY = "api_key";
-                final String API_VALUE = "ed1b942e1ee7f2f81bec1461b84e5e87"; // TODO - replace/remove with API key
+                final String API_VALUE = null; // TODO - replace/remove with API key
 
                 if (sortOrder != FAVORITE_MOVIES) {
                     Uri builtUri = Uri.parse(baseUrl).buildUpon()

@@ -200,20 +200,6 @@ public class MovieDetailFragment extends Fragment {
         }
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        public void onFragmentInteraction(Uri uri);
-    }
-
     private class MovieMediaTask extends AsyncTask<Void, Void, Void> {
 
         @Override
@@ -225,7 +211,7 @@ public class MovieDetailFragment extends Fragment {
             try {
                 final String urlTrailerBase = "http://api.themoviedb.org/3/movie";
                 final String API_KEY = "api_key";
-                final String API_VALUE = "ed1b942e1ee7f2f81bec1461b84e5e87";
+                final String API_VALUE = null; //TODO add/remove API key
                 final String movieId = String.valueOf(movie.getId());
                 final String videoPath = "videos";
 
